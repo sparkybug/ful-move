@@ -34,6 +34,10 @@ if [ "$1" = "apache2-foreground" ]; then
     if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
         su -s /bin/sh www-data -c 'php artisan migrate --force --no-interaction'
     fi
+
+    if [ "$RUN_SEEDERS" = "true" ]; then
+        su -s /bin/sh www-data -c 'php artisan db:seed --force'
+    fi
 fi
 
 exec docker-php-entrypoint "$@"
