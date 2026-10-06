@@ -81,7 +81,7 @@ Deployment needs a hosting account and database; this delivery is configured loc
 - Run `php artisan config:cache`, `php artisan route:cache`, and `php artisan view:cache`.
 - Configure real terminals and fares through the admin area. Drivers register their buses for approval.
 
-Demo seeding and the sample-boarding command deliberately refuse production mode. Do not copy the local demo database or expose its shared passwords publicly. This application contains demonstration credits, not real money or externally funded wallets.
+For the hosted coursework demo, set `RUN_SEEDERS=true`: Docker seeds the sample records and opens missing boarding runs automatically after migrations. Repeated startups preserve accounts, credits, bookings and active runs. Only the four sample bus/driver pairs are opened. Set `RUN_SEEDERS=false` for normal operations with unique account passwords; production demo commands require explicit demo mode (`RUN_SEEDERS=true` or `ALLOW_DEMO_SEED=true`). This application contains demonstration credits, not real money or externally funded wallets. See [docs/RENDER.md](docs/RENDER.md) for details.
 
 No queue worker, websocket server, GPS, payment gateway, map service, SMS provider, or separate API is needed.
 
@@ -95,4 +95,3 @@ No queue worker, websocket server, GPS, payment gateway, map service, SMS provid
 - `tests/Feature/ShuttleTest.php` and `tests/Feature/ConcurrencyTest.php`: acceptance checks.
 
 Implementation references: [Laravel transactions](https://laravel.com/docs/12.x/database#database-transactions) and [pessimistic locking](https://laravel.com/docs/12.x/queries#pessimistic-locking).
-

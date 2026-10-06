@@ -123,6 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'allow_demo_seed' => env('ALLOW_DEMO_SEED', false),
+    'allow_demo_seed' => env('ALLOW_DEMO_SEED', false) || env('RUN_SEEDERS', false),
 
 ];

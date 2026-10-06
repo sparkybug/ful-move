@@ -45,7 +45,8 @@ ENV APP_ENV=production \
     QUEUE_CONNECTION=sync \
     MAIL_MAILER=log \
     PORT=10000 \
-    RUN_MIGRATIONS=false
+    RUN_MIGRATIONS=false \
+    RUN_SEEDERS=false
 
 COPY --from=dependencies /app ./
 COPY --from=assets /app/public/build ./public/build

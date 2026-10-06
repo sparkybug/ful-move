@@ -30,13 +30,15 @@ if [ "$1" = "apache2-foreground" ]; then
     su -s /bin/sh www-data -c 'php artisan view:cache --no-interaction'
 
     # Free Render services have no pre-deploy shell. Migrations are opt-in.
-    # Never reset the database or seed accounts during startup.
+    # Never reset the database during startup.
     if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
         su -s /bin/sh www-data -c 'php artisan migrate --force --no-interaction'
     fi
 
-    if [ "$RUN_SEEDERS" = "true" ]; then
-        su -s /bin/sh www-data -c 'php artisan db:seed --force'
+    # Explicit coursework demo mode: seed first, then open missing sample runs.
+    if [ "${RUN_SEEDERS:-false}" = "true" ]; then
+        su -s /bin/sh www-data -c 'php artisan db:seed --force --no-interaction'
+        su -s /bin/sh www-data -c 'php artisan demo:boarding --no-interaction'
     fi
 fi
 

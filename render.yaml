@@ -20,6 +20,9 @@ services:
         value: "*"
       - key: RUN_MIGRATIONS
         value: "true"
+      # Coursework demo: seed and open the four sample buses at startup.
+      - key: RUN_SEEDERS
+        value: "true"
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST

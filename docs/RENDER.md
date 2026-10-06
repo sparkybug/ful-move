@@ -54,6 +54,8 @@ APP_KEY=base64:YOUR_GENERATED_KEY
 # Optional on Render: APP_URL=https://YOUR_CUSTOM_DOMAIN
 TRUSTED_PROXIES=*
 RUN_MIGRATIONS=true
+# Enable for this coursework demo; omit or set false for normal operations.
+RUN_SEEDERS=true
 DB_CONNECTION=mysql
 DB_HOST=YOUR_AIVEN_HOST
 DB_PORT=YOUR_AIVEN_PORT
@@ -83,9 +85,28 @@ The container listens on `0.0.0.0:$PORT` (default 10000). Render terminates HTTP
 Leave this variable unset when serving directly without a trusted reverse proxy.
 
 `RUN_MIGRATIONS=true` runs `php artisan migrate --force` before Apache starts and
-stops startup if migration fails. This suits one free demo instance. It never runs
-`migrate:fresh`, demo seeding or sample boarding. Set it to `false` if you manage
-migrations separately. Back up data before deploying schema changes.
+stops startup if migration fails. It never runs `migrate:fresh`. Set it to `false`
+if you manage migrations separately. Back up data before deploying schema changes.
+
+### Automatically populate the demo board
+
+For the hosted coursework demo, set `RUN_MIGRATIONS=true` and `RUN_SEEDERS=true` in
+Render, then deploy the updated code. After migrations, Docker runs `db:seed --force`
+followed by `demo:boarding`. The four sample buses appear without signing in as
+each driver. `RUN_SEEDERS=true` also permits these demo commands in production;
+keep `APP_ENV=production` and `APP_DEBUG=false`.
+
+This runs on container startup, including redeploys and wake-ups. Existing sample
+accounts, passwords, credits, bookings and boarding/departed runs are preserved.
+Only the four sample bus/driver pairs are considered. Pending/rejected buses and
+inactive routes are skipped. Completed or cancelled sample runs may be followed
+by a new boarding run on the next startup. Existing departure estimates are not
+silently extended, and boarding is not continuously reopened while the app runs.
+
+This option creates the coursework accounts documented in the README, with their
+shared demo password and simulated credits. Use it for the demo; set it to `false`
+for normal operations, where drivers open boarding themselves. Disabling it stops
+future automatic setup; it does not delete existing demo accounts or records.
 
 ## 4. Create the first administrator
 
@@ -109,9 +130,9 @@ command bypasses web startup and does not rerun migrations. If you disabled
 automatic migrations, first run the same Docker command with
 `php artisan migrate --force` instead of `php artisan app:create-admin`.
 
-Sign in on the deployed site and add terminals and fares. Drivers can then
-register their buses for approval. Do not upload the local demo database or reuse
-the shared demo passwords.
+For normal operations (`RUN_SEEDERS=false`), sign in on the deployed site and add
+terminals and fares. Drivers can then register their buses for approval. Use unique
+account passwords and a database separate from the coursework demo.
 
 ## Verify and operate
 
