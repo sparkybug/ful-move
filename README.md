@@ -1,4 +1,4 @@
-# FUL Move — Campus Shuttle Booking
+# FUL Move - Campus Shuttle Booking
 
 A Laravel 12 monolith for the Federal University Lokoja coursework prototype. Blade, Tailwind CSS, a small amount of JavaScript, and MySQL/MariaDB. It implements the supplied eight-page requirements document: student, driver, and admin accounts; live boarding buses; one-seat reservations; internal transport wallets; check-in; walk-ins; and cancellation refunds.
 
