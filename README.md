@@ -1,4 +1,4 @@
-# FUL Move — Campus Shuttle Booking
+# FUL Move - Campus Shuttle Booking
 
 A Laravel 12 monolith for the Federal University Lokoja coursework prototype. Blade, Tailwind CSS, a small amount of JavaScript, and MySQL/MariaDB. It implements the supplied eight-page requirements document: student, driver, and admin accounts; live boarding buses; one-seat reservations; internal transport wallets; check-in; walk-ins; and cancellation refunds.
 
@@ -13,20 +13,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\Start-Demo.ps1
 ```
 
 This script only starts the already configured local database and application. It does not reset data, seed users again, change system services, or open a firewall port.
-
-All seeded accounts use **Campus@2026**:
-
-| Role | Email |
-| --- | --- |
-| Admin | admin@ful.test |
-| Student | student@ful.test |
-| Second student | student2@ful.test |
-| 18-seat driver | driver18@ful.test |
-| 60-seat driver | driver60@ful.test |
-| 12-seat driver | driver12@ful.test |
-| 10-seat driver | driver10@ful.test |
-
-Use different browsers or private browser windows for each role. Tabs in the same browser session share a login. The local seed gives each student ₦1,000 once, records the admin credit in the ledger, and creates four approved buses. Sample terminal names and identifiers are editable demo values, not verified university transport data.
 
 ## Fresh installation
 
