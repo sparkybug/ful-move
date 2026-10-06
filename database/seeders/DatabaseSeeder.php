@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        if (app()->environment('production')) {
+        if (app()->environment('production') && ! config('app.allow_demo_seed')) {
             throw new \RuntimeException('Demo accounts must not be seeded in production.');
         }
+
         $admin = User::firstOrCreate(['email' => 'admin@ful.test'], ['name' => 'Transport Admin', 'role' => 'admin', 'password' => 'Campus@2026']);
         foreach (['student@ful.test' => ['Amina Yusuf', 'FUL/2026/001'], 'student2@ful.test' => ['David Okafor', 'FUL/2026/002']] as $email => [$name, $identifier]) {
             $student = User::firstOrCreate(['email' => $email], ['name' => $name, 'student_identifier' => $identifier, 'role' => 'student', 'password' => 'Campus@2026']);
