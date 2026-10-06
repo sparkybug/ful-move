@@ -15,8 +15,7 @@ services:
         value: "false"
       - key: APP_KEY
         sync: false
-      - key: APP_URL
-        sync: false
+      # APP_URL defaults to Render's assigned URL. Set it manually for a custom domain.
       - key: TRUSTED_PROXIES
         value: "*"
       - key: RUN_MIGRATIONS

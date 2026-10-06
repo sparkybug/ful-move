@@ -41,15 +41,17 @@ In Render, choose **New > Web Service**, connect the repository, and set:
 | Docker command | Leave blank; use the image default |
 | Health check path | `/up` |
 
-Add these environment variables. Replace all placeholders, including the public
-URL with the actual address Render assigns to your service.
+Add these environment variables and replace all placeholders. `APP_URL` is
+optional on Render: startup uses Render's `RENDER_EXTERNAL_URL` when `APP_URL` is
+unset or empty. For a custom domain, set `APP_URL` to its full HTTPS address;
+that explicit value takes precedence. Outside Render, set `APP_URL` yourself.
 
 ```dotenv
 APP_NAME="FUL Move"
 APP_ENV=production
 APP_DEBUG=false
 APP_KEY=base64:YOUR_GENERATED_KEY
-APP_URL=https://YOUR_SERVICE.onrender.com
+# Optional on Render: APP_URL=https://YOUR_CUSTOM_DOMAIN
 TRUSTED_PROXIES=*
 RUN_MIGRATIONS=true
 DB_CONNECTION=mysql
@@ -113,6 +115,11 @@ the shared demo passwords.
 
 ## Verify and operate
 
+- If an older image exits with `APP_URL: Set APP_URL to the public HTTPS address`,
+  open **Render > your service > Environment** and add `APP_URL` with the actual
+  HTTPS service URL shown in the dashboard, then choose **Save and deploy**. This
+  fixes that startup error without rebuilding. Deploying the updated entrypoint
+  also fixes it by using Render's assigned URL automatically.
 - Open `/up`, the homepage and `/login`. `/up` checks Laravel startup, not database
   connectivity; verify registration/login and the board to check the database.
 - Confirm the CSS/JS load over HTTPS and sign-in stays logged in between requests.
@@ -128,5 +135,6 @@ the shared demo passwords.
 References: [Render Docker](https://render.com/docs/docker),
 [Render ports and HTTPS](https://render.com/docs/web-services),
 [Render secrets](https://render.com/docs/configure-environment-variables),
+[Render default environment variables](https://render.com/docs/environment-variables),
 [Render free limits](https://render.com/docs/free),
 [Aiven free MySQL](https://aiven.io/docs/products/mysql/concepts/mysql-free-tier).

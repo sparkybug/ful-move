@@ -4,7 +4,9 @@ set -eu
 # One-off commands (for example, creating an admin) do not start the web server.
 if [ "$1" = "apache2-foreground" ]; then
     : "${APP_KEY:?Set a persistent Laravel APP_KEY in the hosting environment.}"
-    : "${APP_URL:?Set APP_URL to the public HTTPS address.}"
+    # Render supplies its public URL automatically; an explicit custom URL wins.
+    export APP_URL="${APP_URL:-${RENDER_EXTERNAL_URL:-}}"
+    : "${APP_URL:?Set APP_URL to the public HTTPS address when RENDER_EXTERNAL_URL is unavailable.}"
 
     export PORT="${PORT:-10000}"
     case "$PORT" in
